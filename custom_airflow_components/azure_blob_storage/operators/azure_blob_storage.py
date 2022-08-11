@@ -17,7 +17,7 @@ class BlobType(Enum):
 
 
 class BlobStorageToPostgresOperator(BaseOperator):
-    template_fields: Sequence[str] = "source_blob_name"
+    template_fields: Sequence[str] = ("source_blob_name")
 
     @apply_defaults
     def __init__(
