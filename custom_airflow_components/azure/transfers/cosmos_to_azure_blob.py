@@ -47,7 +47,7 @@ class CosmosToBlobStorageOperator(BaseOperator):
         )
 
         try:
-            # I need to re-implement this because the get_documents method from CosmosHook doesn't support cross_query_partition
+            # I need to re-implement this because the get_documents method from CosmosHook doesn't support cross_partition_query
             cosmos_container = (
                 cosmos_hook.get_conn()
                 .get_database_client(self._source_cosmos_database_name)
