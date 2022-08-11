@@ -4,7 +4,6 @@ from io import BytesIO, StringIO
 from typing import List, Sequence
 
 import fastavro
-from airflow.exceptions import AirflowConfigException
 from airflow.models import BaseOperator
 from airflow.providers.microsoft.azure.hooks.wasb import WasbHook
 from airflow.providers.postgres.hooks.postgres import PostgresHook
@@ -17,7 +16,7 @@ class BlobType(Enum):
 
 
 class BlobStorageToPostgresOperator(BaseOperator):
-    template_fields: Sequence[str] = ("source_blob_name")
+    template_fields: Sequence[str] = ("source_blob_name",)
 
     @apply_defaults
     def __init__(
