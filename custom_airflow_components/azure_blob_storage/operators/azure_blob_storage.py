@@ -28,7 +28,7 @@ class BlobStorageToPostgresOperator(BaseOperator):
         source_blob_name: str,
         target_table_name: str,
         target_column_names: List[str],
-        blob_type: BlobType,
+        blob_type: str,
         replace: bool,
         replace_index: str,
         **kwargs,
@@ -40,7 +40,7 @@ class BlobStorageToPostgresOperator(BaseOperator):
         self._source_blob_name = source_blob_name
         self._target_table_name = target_table_name
         self._target_column_names = target_column_names
-        self._blob_type = blob_type
+        self._blob_type = BlobType(blob_type.lower())
         self._replace = replace
         self._replace_index = replace_index
 
@@ -56,15 +56,13 @@ class BlobStorageToPostgresOperator(BaseOperator):
             bytes_buffer.write(download_stream.readall())
             bytes_buffer.seek(0)
 
-            if self._blob_type == BlobType.AVRO.value:
+            if self._blob_type == BlobType.AVRO:
                 records = list(fastavro.reader(bytes_buffer))
-            elif self._blob_type == BlobType.CSV.value:
+            elif self._blob_type == BlobType.CSV:
                 string_buffer = StringIO(bytes_buffer.getvalue().decode())
                 csv_data = csv.reader(string_buffer)
                 records = list(csv_data)
                 string_buffer.close()
-            else:
-                raise AirflowConfigException("Invalid blob type parameter.")
 
             bytes_buffer.close()
             n_records = len(records)
