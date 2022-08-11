@@ -8,6 +8,7 @@ authors = ["Uziel Linares <uziel.linares@protonmail.com>"]
 python = "^3.8"
 apache-airflow = "^2.3.3"
 apache-airflow-providers-postgres = "^5.1.0"
+apache-airflow-providers-microsoft-azure = "^4.1.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"
