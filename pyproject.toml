@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "my-custom-airflow-components"
+name = "custom-airflow-components"
 version = "0.1.0"
 description = ""
 authors = ["Uziel Linares <uziel.linares@protonmail.com>"]
