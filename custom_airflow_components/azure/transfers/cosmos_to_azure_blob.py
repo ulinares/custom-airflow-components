@@ -1,5 +1,5 @@
 import csv
-from typing import Sequence
+from typing import Sequence, Optional
 from io import BytesIO, StringIO
 
 from airflow.models import BaseOperator
@@ -23,6 +23,7 @@ class CosmosToBlobStorageOperator(BaseOperator):
         target_blob_container_name: str,
         target_blob_name: str,
         replace: bool = True,
+        cosmos_extra_query: Optional[str] = None,
         **kwargs,
     ):
         super(CosmosToBlobStorageOperator, self).__init__(**kwargs)
@@ -32,6 +33,7 @@ class CosmosToBlobStorageOperator(BaseOperator):
         self._source_cosmos_collection_name = source_cosmos_collection_name
         self._target_blob_container_name = target_blob_container_name
         self._target_blob_name = target_blob_name
+        self._extra_query = cosmos_extra_query
         self._replace = replace
 
     def execute(self, context: Context):
@@ -45,6 +47,9 @@ class CosmosToBlobStorageOperator(BaseOperator):
         sql_string = (
             f"select * from c where c._ts >= {start_ts} and c._ts <= {end_ts}"
         )
+
+        if self._extra_query:
+            sql_string += f"and {self._extra_query}"
 
         try:
             # I need to re-implement this because the get_documents method from CosmosHook doesn't support cross_partition_query
