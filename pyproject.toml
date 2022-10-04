@@ -6,7 +6,7 @@ authors = ["Uziel Linares <uziel.linares@protonmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-apache-airflow = "^2.3.3"
+apache-airflow = "2.2.5"
 apache-airflow-providers-postgres = "^5.1.0"
 apache-airflow-providers-microsoft-azure = "^4.1.0"
 fastavro = "^1.5.4"
@@ -18,3 +18,6 @@ isort = "^5.10.1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
